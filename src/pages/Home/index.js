@@ -27,7 +27,7 @@ const Page = () => {
         <section className="SliderContainer">
           <Slider />
         </section>
-        <section className="ServicesContainer">
+        <section className="ServicesContainer" id="services">
           <h2 className="Title">Nos services</h2>
           <p>Nous organisons des événements sur mesure partout dans le monde</p>
           <div className="ListContainer">
@@ -56,41 +56,47 @@ const Page = () => {
             </ServiceCard>
           </div>
         </section>
-        <section className="EventsContainer">
+        <section className="EventsContainer" id="realisations">
           <h2 className="Title">Nos réalisations</h2>
           <EventList />
         </section>
-        <section className="PeoplesContainer">
+        <section className="PeoplesContainer" id="equipe">
           <h2 className="Title">Notre équipe</h2>
           <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
           <div className="ListContainer">
             <PeopleCard
               imageSrc="/images/stephanie-liverani-Zz5LQe-VSMY-unsplash.png"
+              imageAlt="CEO Samira"
               name="Samira"
               position="CEO"
             />
             <PeopleCard
               imageSrc="/images/linkedin-sales-solutions-pAtA8xe_iVM-unsplash.png"
+              imageAlt="Directeur marketing Jean-baptiste"
               name="Jean-baptiste"
               position="Directeur marketing"
             />
             <PeopleCard
               imageSrc="/images/christina-wocintechchat-com-SJvDxw0azqw-unsplash.png"
+              imageAlt="CXO Alice"
               name="Alice"
               position="CXO"
             />
             <PeopleCard
               imageSrc="/images/jonas-kakaroto-KIPqvvTOC1s-unsplash.png"
+              imageAlt="Animateur Luìs"
               name="Luís"
               position="Animateur"
             />
             <PeopleCard
               imageSrc="/images/amy-hirschi-b3AYk8HKCl0-unsplash1.png"
+              imageAlt="VP animation Christine"
               name="Christine"
               position="VP animation"
             />
             <PeopleCard
               imageSrc="/images/christina-wocintechchat-com-0Zx1bDv5BNY-unsplash.png"
+              imageAlt="VP communication Isabelle"
               name="Isabelle"
               position="VP communication"
             />
@@ -133,16 +139,16 @@ const Page = () => {
           <div>01 23 45 67 89</div>
           <div>contact@724events.com</div>
           <div>
-            <a href="#twitch">
+            <a href="#twitch" aria-label="Twitch">
               <Icon name="twitch" />
             </a>
-            <a href="#facebook">
+            <a href="#facebook" aria-label="Facebook">
               <Icon name="facebook" />
             </a>
-            <a href="#twitter">
+            <a href="#twitter" aria-label="Twitter">
               <Icon name="twitter" />
             </a>
-            <a href="#youtube">
+            <a href="#youtube" aria-label="Youtube">
               <Icon name="youtube" />
             </a>
           </div>
