@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import EventCard from "../../components/EventCard";
@@ -10,13 +11,18 @@ import Logo from "../../components/Logo";
 import Icon from "../../components/Icon";
 import Form from "../../containers/Form";
 import Modal from "../../containers/Modal";
+import ModalEvent from "../../containers/ModalEvent"; // ajout de modalEvent
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
   const { data } = useData();
-  const last = data?.events.sort((evtA, evtB) =>
-    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
-  )[0];
+
+  const last = useMemo(() => {
+    if (!data) return null;
+    return data.events?.sort(
+      (evtA, evtB) => new Date(evtB.date) - new Date(evtA.date)
+    )[0];
+  }, [data]);
 
   return (
     <>
@@ -33,26 +39,32 @@ const Page = () => {
           <div className="ListContainer">
             <ServiceCard imageSrc="/images/priscilla-du-preez-Q7wGvnbuwj0-unsplash1.png">
               <h3>Soirée d’entreprise</h3>
-              Une soirée d’entreprise vous permet de réunir vos équipes pour un
-              moment convivial afin de valoriser votre société en projetant une
-              image dynamique. Nous vous proposons d’organiser pour vous vos
-              diners et soirée d’entreprise
+              <p>
+                Une soirée d’entreprise vous permet de réunir vos équipes pour
+                un moment convivial afin de valoriser votre société en projetant
+                une image dynamique. Nous vous proposons d’organiser pour vous
+                vos dîners et soirées d’entreprise.
+              </p>
             </ServiceCard>
             <ServiceCard imageSrc="/images/hall-expo.png">
               <h3>Conférences</h3>
-              724 events vous propose d’organiser votre évènement, quelle que
-              soit sa taille, en s’adaptant à votre demande et à vos demandes.
-              En tant que spécialistes de l’évènementiel, nous saurons trouver
-              le lieu parfait ainsi que des solutions inédites pour capter votre
-              audience et faire de cet évènement un succès
+              <p>
+                724 events vous propose d’organiser votre évènement, quelle que
+                soit sa taille, en s’adaptant à vos demandes. En tant que
+                spécialistes de l’évènementiel, nous saurons trouver le lieu
+                parfait ainsi que des solutions inédites pour capter votre
+                audience et faire de cet évènement un succès.
+              </p>
             </ServiceCard>
             <ServiceCard imageSrc="/images/sophia-sideri-LFXMtUuAKK8-unsplash1.png">
               <h3>Experience digitale</h3>
-              Notre agence experte en contenus immersifs offre des services de
-              conseil aux entreprises, pour l’utilisation de la réalité
-              virtuelle, de la réalité augmentée et de la réalité mixte de
-              l’animation événementielle, à la veille technologique jusqu’au
-              développement de module de formation innovant
+              <p>
+                Notre agence experte en contenus immersifs offre des services de
+                conseil aux entreprises, pour l’utilisation de la réalité
+                virtuelle, de la réalité augmentée et de la réalité mixte de
+                l’animation événementielle, à la veille technologique jusqu’au
+                développement de modules de formation innovants.
+              </p>
             </ServiceCard>
           </div>
         </section>
@@ -62,7 +74,7 @@ const Page = () => {
         </section>
         <section className="PeoplesContainer" id="equipe">
           <h2 className="Title">Notre équipe</h2>
-          <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
+          <p>Une équipe d’experts dédiés à l’organisation de vos événements</p>
           <div className="ListContainer">
             <PeopleCard
               imageSrc="/images/stephanie-liverani-Zz5LQe-VSMY-unsplash.png"
@@ -109,8 +121,8 @@ const Page = () => {
               <div className="ModalMessage--success">
                 <div>Message envoyé !</div>
                 <p>
-                  Merci pour votre message nous tâcherons de vous répondre dans
-                  les plus brefs délais
+                  Merci pour votre message. Nous tâcherons de vous répondre dans
+                  les plus brefs délais.
                 </p>
               </div>
             }>
@@ -121,34 +133,55 @@ const Page = () => {
         </div>
       </main>
       <footer className="row">
-        <div className="col presta">
-          <h3>Notre derniére prestation</h3>
-          {last && (
-            <EventCard
-              imageSrc={last.cover}
-              title={last.title}
-              date={new Date(last.date)}
-              small
-              label="boom"
-            />
-          )}
-        </div>
+        {last && (
+          <div className="col presta">
+            <h3>Notre dernière prestation</h3>
+            <Modal key={last.id} Content={<ModalEvent event={last} />}>
+              {({ setIsOpened }) => (
+                <EventCard
+                  onClick={() => setIsOpened(true)}
+                  imageSrc={last.cover}
+                  title={last.title}
+                  date={new Date(last.date)}
+                  small
+                  label="boom"
+                />
+              )}
+            </Modal>
+          </div>
+        )}
         <div className="col contact">
           <h3>Contactez-nous</h3>
           <address>45 avenue de la République, 75000 Paris</address>
           <div>01 23 45 67 89</div>
           <div>contact@724events.com</div>
           <div>
-            <a href="#twitch" aria-label="Twitch">
+            <a
+              href="https://www.twitch.tv"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitch">
               <Icon name="twitch" />
             </a>
-            <a href="#facebook" aria-label="Facebook">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook">
               <Icon name="facebook" />
             </a>
-            <a href="#twitter" aria-label="Twitter">
+            <a
+              href="https://www.twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter">
               <Icon name="twitter" />
             </a>
-            <a href="#youtube" aria-label="Youtube">
+            <a
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Youtube">
               <Icon name="youtube" />
             </a>
           </div>
@@ -159,7 +192,7 @@ const Page = () => {
             Une agence événementielle propose des prestations de service
             spécialisées dans la conception et l&apos;organisation de divers
             événements tels que des événements festifs, des manifestations
-            sportives et culturelles, des événements professionnels
+            sportives et culturelles, des événements professionnels.
           </p>
         </div>
       </footer>
